@@ -8,5 +8,14 @@ resource "aws_subnet" "main" {
   }
 }
 
+resource "aws_route_table" "main" {
+  for_each = var.sub-subnets
+  vpc_id = var.vpc_id
+  tags = {
+    Name = "${each.key}-rt"
+  }
+
+}
+
 variable "sub-subnets" {}
 variable "vpc_id" {}
