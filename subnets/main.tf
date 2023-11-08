@@ -23,5 +23,6 @@ resource "aws_route_table_association" "route-association" {
 }
 
 
+
 variable "sub-subnets" {}
 variable "vpc_id" {}
