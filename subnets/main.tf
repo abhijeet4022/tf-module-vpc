@@ -14,8 +14,8 @@ resource "aws_route_table" "main" {
   tags = {
     Name = "${each.key}-rt"
   }
-
 }
+
 
 variable "sub-subnets" {}
 variable "vpc_id" {}
