@@ -37,7 +37,7 @@ resource "aws_eip" "ngw" {
 }
 
 resource "aws_nat_gateway" "ngw" {
-  #for_each      = lookup(lookup(module.subnets, "public", null), "subnets_ids", null)
+  #for_each     = lookup(lookup(module.subnets, "public", null), "subnets_ids", null)
   count         = length(local.public_subnet_ids)
   allocation_id = element(aws_eip.ngw.*.id, count.index )
   subnet_id     = element(local.public_subnet_ids, count.index )
