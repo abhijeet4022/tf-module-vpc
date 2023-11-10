@@ -29,7 +29,7 @@ resource "aws_route" "igw" {
 
 resource "aws_eip" "ngw" {
   #for_each = lookup(lookup(module.subnets, "public", null), "subnets_ids", null)
-  count  = length(local.private_subnet_ids)
+  count  = length(local.public_subnet_ids)
   domain = "vpc"
   tags   = {
     Name = "ngw-eip-${count.index + 1}"
