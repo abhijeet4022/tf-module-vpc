@@ -7,10 +7,10 @@ resource "aws_vpc" "main" {
 }
 
 module "subnets" {
-  source = "./subnets"
-  for_each = var.subnets
+  source      = "./subnets"
+  for_each    = var.subnets
   sub-subnets = each.value
-  vpc_id = aws_vpc.main.id
+  vpc_id      = aws_vpc.main.id
 }
 
 resource "aws_internet_gateway" "igw" {
@@ -21,10 +21,10 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_route" "igw" {
-  for_each = lookup(lookup(module.subnets, "public", null), "route_table_ids", null)
-  route_table_id = each.value["id"]
+  for_each               = lookup(lookup(module.subnets, "public", null), "route_table_ids", null)
+  route_table_id         = each.value["id"]
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.igw.id
+  gateway_id             = aws_internet_gateway.igw.id
 }
 
 output "subnet" {
