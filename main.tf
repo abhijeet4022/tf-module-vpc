@@ -31,7 +31,7 @@ resource "aws_eip" "ngw" {
   for_each = lookup(lookup(module.subnets, "public", null), "subnets_ids", null)
   domain   = "vpc"
   tags = {
-    Name = "a"
+    Name = "${each.key}-ngw-eip"
   }
 }
 
