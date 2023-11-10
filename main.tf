@@ -54,12 +54,25 @@ resource "aws_route" "ngw" {
   nat_gateway_id         = element(aws_nat_gateway.ngw.*.id, count.index )
 }
 
-resource "aws_vpc_peering_connection" "foo" {
+resource "aws_vpc_peering_connection" "peering" {
   peer_vpc_id = aws_vpc.main.id
   vpc_id      = var.default_vpc_id
   tags        = {
     Name = VPC_Peering
   }
+}
+
+resource "aws_route" "main_vpc_peering_rt" {
+  count                     = length(local.private_route_table_ids)
+  route_table_id            = element(local.private_route_table_ids, count.index )
+  destination_cidr_block    = var.default_vpc_cidr
+  vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
+}
+
+resource "aws_route" "default_vpc_peering_rt" {
+  route_table_id            = var.default_vpc_route_table_id
+  destination_cidr_block    = var.cidr
+  vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
 }
 
 output "subnet" {
