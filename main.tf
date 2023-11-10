@@ -28,14 +28,14 @@ resource "aws_route" "igw" {
 }
 
 resource "aws_eip" "ngw" {
-  for_each =   lookup(lookup(module.subnets, "public", null), "subnets_ids", null)
-  domain = "vpc"
+  for_each = lookup(lookup(module.subnets, "public", null), "subnets_ids", null)
+  domain   = "vpc"
 }
 
 resource "aws_nat_gateway" "ngw" {
-  for_each = lookup(lookup(module.subnets, "public", null), "subnets_ids", null)
-  allocation_id = lookup(aws_eip, each.value["id"], null )
-  subnet_id = each.value["id"]
+  for_each      = lookup(lookup(module.subnets, "public", null), "subnets_ids", null)
+  allocation_id = lookup(aws_eip, each.value["id"], null)
+  subnet_id     = each.value["id"]
 }
 
 output "subnet" {
