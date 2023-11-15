@@ -70,7 +70,4 @@ resource "aws_route" "default_vpc_peering_rt" {
   vpc_peering_connection_id = aws_vpc_peering_connection.peering.id
 }
 
-output "subnet" {
-  value = module.subnets
-}
 
