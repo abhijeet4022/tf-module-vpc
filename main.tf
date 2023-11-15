@@ -9,7 +9,7 @@ module "subnets" {
   for_each    = var.subnets
   sub-subnets = each.value
   vpc_id      = aws_vpc.main.id
-  tags       = local.tags
+  tags        = local.tags
   env         = var.env
 }
 
